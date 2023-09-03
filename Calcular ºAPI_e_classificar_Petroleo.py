@@ -14,11 +14,11 @@ def classificação(api):
         print("Extraleve")
     else:
         print("VALOR FORA DO INTERVALO DE CLASSIFICAÇÃO!")
-def calculograuapi(dagua, doleo, t):
-    d = doleo / dagua
+def calculograuapi(densidade_agua, densidade_oleo, temperatura):
+    d = densidade_oleo / densidade_agua
     api = (141.5 / d) - 131.5
-    if t != 60:
-        api_corrigido = api + ((60 - t) / 10)
+    if temperatura != 60:
+        api_corrigido = api + ((60 - temperatura) / 10)
         api = api_corrigido
         print(f'ºAPI: {api:.2f}')
         classificação(api)
@@ -26,56 +26,58 @@ def calculograuapi(dagua, doleo, t):
         print(f'ºAPI: {api:.2f}')
         print("Petróleo: ", end="")
         classificação(api)
-def conversao(t):
-    f = (t * 1.8) + 32
-    t = f
-    return t
+def conversao(temperatura):
+    fahrenheit = (temperatura * 1.8) + 32
+    temperatura = fahrenheit
+    return temperatura
 
-res = 'SIM'
-while res == 'SIM':
+resposta = 'SIM'
+
+while resposta == 'SIM':
     while True:
         print("-="*25)
         print('      Calcular ºAPI e classificar Petróleo!')
         print("-="*25)
         print('Calcular grau API [1]')
         print('Classificar Petróleo [2]')
-        r = int(input())
-        if r == 1 or r == 2:
+        interacao_usuario = int(input())
+        if interacao_usuario == 1 or interacao_usuario == 2:
             break
         else:
             print("-="*25)
             print('                      Erro!')
             print("-="*25)
-    if r == 1:
+    if interacao_usuario == 1:
         print("-="*25)
-        dagua = float(input('Densidade da água: '))
-        doleo = float(input('Densidade da óleo: '))
-        temp = input('Temperatura em graus Celsius ?[sim/nao]').upper().strip()
-        while (temp != 'SIM') and (temp != 'NAO') and (temp != 'NÃO'):
+        densidade_agua = float(input('Densidade da água: '))
+        densidade_oleo = float(input('Densidade da óleo: '))
+        pergunta_temperatura = input('Temperatura em graus Celsius ?[sim/nao]').upper().strip()
+        
+        while (pergunta_temperatura != 'SIM') and (pergunta_temperatura != 'NAO') and (pergunta_temperatura != 'NÃO'):
             print("-="*25)
             print('                      Erro!')
             print("-="*25)
-            temp = input('Temperatura em graus Celsius ?[sim/nao]').upper().strip()
-        if temp == 'SIM':
-            t = int(input('Temperatura: '))
-            t = conversao(t)
+            pergunta_temperatura = input('Temperatura em graus Celsius ?[sim/nao]').upper().strip()
+        if pergunta_temperatura == 'SIM':
+            temperatura = int(input('Temperatura: '))
+            temperatura = conversao(temperatura= temperatura)
         else:
-            t = int(input('Temperatura: '))
+            temperatura = int(input('Temperatura: '))
         print("-="*25)    
-        calculograuapi(dagua, doleo, t)
+        calculograuapi(densidade_agua= densidade_agua, densidade_oleo= densidade_oleo, temperatura= temperatura)
         print("-="*25)
-    if r == 2:
+    if interacao_usuario == 2:
         print("-="*25)
         api = int(input('Digite o ºAPI do óleo: '))
         print("-="*25), print()
         classificação(api)
         print("-="*25), print()
 
-    res = str(input('Continuar programa?[sim/nao] ')).upper().strip()
-    while (res != 'NAO') and (res != 'NÃO') and (res != 'SIM'):
+    resposta = str(input('Continuar programa?[sim/nao] ')).upper().strip()
+    while (resposta != 'NAO') and (resposta != 'NÃO') and (resposta != 'SIM'):
             print("-="*25)
             print('                      Erro!')
             print("-="*25)
-            res = input('Continuar programa?[sim/nao] ').upper().strip()
+            resposta = input('Continuar programa?[sim/nao] ').upper().strip()
 
 print('Fim!')
